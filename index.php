@@ -173,7 +173,13 @@
                             throw new Exception("", 400);
                         }
 
-                        return json_decode(file_get_contents('php://input'), true);
+                        $json = json_decode(file_get_contents('php://input'), true);
+
+                        if(JSON_ERROR_NONE !== json_last_error()){
+                            throw new Exception("", 400);
+                        }
+
+                        return $json;
                     })()
                 )
             ),
