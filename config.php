@@ -1,4 +1,29 @@
 <?php
+
+function foo(){
+    return [
+        [
+            "id" => 123,
+            "username" => "okaken",
+        ],
+        [
+            "id" => 123,
+            "username" => "okaken",
+        ],
+        [
+            "id" => 123,
+            "username" => "okaken",
+        ],
+    ];
+}
+
+function bar(int $userId){
+    return [
+        "id" => $userId,
+        "username" => "okaken",
+    ];
+}
+
 return [
     "routes"  => [
         "GET"   => [
@@ -6,10 +31,10 @@ return [
                 "action"    => function(){return ["path" => "/"];},
             ],
             "/users" => [
-                "action"    => function(){return ["path" => "/users"];},
+                "action"    => "foo",
             ],
             "/users/:userId" => [
-                "action"    => function(int $userId){return ["path" => "/users/:userId", "args" => func_get_args()];},
+                "action"    => "bar",
             ],
             "/users/:userId/books" => [
                 "action"    => function(){return ["path" => "/users/:userId/books"];},

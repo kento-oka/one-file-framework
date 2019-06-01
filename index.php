@@ -169,17 +169,21 @@
                         return "/" === substr($path, 0, 1) ? substr($path, 1) : $path;
                     })(),
                     (function(){
-                        if("application/json" !== trim(strtolower(explode(";", $_SERVER["CONTENT_TYPE"] ?? "")[0]))){
-                            throw new Exception("", 400);
+                        if(isset($_SERVER["CONTENT_TYPE"])){
+                            if("application/json" !== trim(strtolower(explode(";", $_SERVER["CONTENT_TYPE"] ?? "")[0]))){
+                                throw new Exception("", 400);
+                            }
+    
+                            $json = json_decode(file_get_contents('php://input'), true);
+    
+                            if(JSON_ERROR_NONE !== json_last_error()){
+                                throw new Exception("", 400);
+                            }
+    
+                            return $json;
                         }
-
-                        $json = json_decode(file_get_contents('php://input'), true);
-
-                        if(JSON_ERROR_NONE !== json_last_error()){
-                            throw new Exception("", 400);
-                        }
-
-                        return $json;
+                        
+                        return [];
                     })()
                 )
             ),
