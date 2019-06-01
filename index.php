@@ -169,11 +169,11 @@
                         return "/" === substr($path, 0, 1) ? substr($path, 1) : $path;
                     })(),
                     (function(){
-                        if("application/json" === trim(strtolower(explode(";", $_SERVER["CONTENT_TYPE"] ?? "")[0]))){
-                            return json_decode(file_get_contents('php://input'), true);
+                        if("application/json" !== trim(strtolower(explode(";", $_SERVER["CONTENT_TYPE"] ?? "")[0]))){
+                            throw new Exception("", 400);
                         }
 
-                        return $_REQUEST;
+                        return json_decode(file_get_contents('php://input'), true);
                     })()
                 )
             ),
